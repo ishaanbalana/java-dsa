@@ -1,8 +1,10 @@
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.Scanner;
 import java.util.Map;
@@ -371,13 +373,85 @@ class Array_concept {
             System.err.println("Both consecutive are same:"+max);
         }
     }
+    //better
+    public int freq_check(int[] arr) {
+        int n = arr.length;
+        int maxi = arr[0];
+        for (int i = 0; i < n; i++) {
+            maxi = Math.max(maxi, arr[i]);
+        }
+        int[] hash = new int[maxi + 1];
+
+        for (int i = 0; i < n; i++) {
+            hash[arr[i]]++;
+        }
+        for (int i = 0; i < n; i++) {
+            if (hash[arr[i]] == 1)
+                return arr[i];
+        }
+        return -1; 
+    }
+    //optimal
+    public void freq_check_optimal(int[] arr) {
+        int xor=0;
+        for (int e:arr) {
+            xor^=e;
+        }
+        System.err.println("The least count number is :"+xor);
+    }
+    //brute
+    public void longest_subarray(int[] arr) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter the sum value (k): ");
+        int k = sc.nextInt();
+
+        boolean found = false;
+
+        List<Integer> arr1 = new ArrayList<>();
+        List<Integer> arr2 = new ArrayList<>();
+
+        for (int i = 0; i < arr.length; i++) {
+
+            int sum = 0;
+            arr1.clear();
+
+            for (int j = i; j < arr.length; j++) {
+
+                sum += arr[j];
+                arr1.add(arr[j]);
+
+                if (sum == k) {
+
+                    found = true;
+
+                    if (arr1.size() > arr2.size()) {
+                        arr2.clear();
+                        arr2.addAll(arr1);
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        if (found) {
+            System.out.println("Longest subarray: " + arr2);
+            System.out.println("Length: " + arr2.size());
+        } else {
+            System.out.println("No subarray found.");
+        }
+       
+
+    }
+
 }
 public class DSA
 {   
-    //brute approach
         public static void main(String[] args) {
             
-        int[] arr={1, 1,0,0,0,1,1,1,1,0,0,0};
+        int[] arr={10, 5, 2, 7, 1, 9};
         Array_concept ap=new Array_concept();
+        ap.longest_subarray(arr);
 	}
 }
