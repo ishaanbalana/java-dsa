@@ -445,13 +445,44 @@ class Array_concept {
 
     }
 
+    public int longest_subarray_better(int[] arr, int k) {
+         HashMap<Long, Integer> preSumMap = new HashMap<>();
+
+        long sum = 0;
+        int maxLen = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+
+            sum += arr[i];
+
+            if (sum == k) {
+                maxLen = Math.max(maxLen, i + 1);
+            }
+
+            long rem = sum - k;
+
+            if (preSumMap.containsKey(rem)) {
+
+                int len = i - preSumMap.get(rem);
+
+                maxLen = Math.max(maxLen, len);
+            }
+
+            if (!preSumMap.containsKey(sum)) {
+                preSumMap.put(sum, i);
+            }
+        }
+
+        return maxLen;
+    }
+
 }
 public class DSA
 {   
         public static void main(String[] args) {
-            
-        int[] arr={10, 5, 2, 7, 1, 9};
         Array_concept ap=new Array_concept();
-        ap.longest_subarray(arr);
+        int[] arr = {10, 5, 2, 7, 9};
+        int k = 15;
+        System.err.println(ap.longest_subarray_better(arr, k));
 	}
 }
