@@ -8,6 +8,43 @@ import java.util.List;
 import java.util.Set;
 import java.util.Scanner;
 import java.util.Map;
+class Hashing_Basic{
+    //optimal
+    public void occurrence(int[] arr, int queries) {
+        Scanner sc = new Scanner(System.in);
+        int k;
+        Map<Integer, Integer> hash=new HashMap<Integer, Integer>();
+        for (int i=0; i<arr.length; i++) {
+            hash.put(arr[i], hash.getOrDefault(arr[i], 0)+1);
+        }
+        for (int i=0; i<queries; i++) {
+            System.err.println("Enter the query:");
+            k=sc.nextInt();
+            System.err.println("occurence of the querie is :"+hash.get(k));
+        }
+    }
+    //optimal
+    public void highest_occurence(int[] arr) {
+        Map<Integer, Integer> map=new HashMap<>();
+        int element=0; 
+        int max_element=0; 
+        int count=0;
+        int max_count=0;
+        for (int i=0; i<arr.length; i++) {
+            map.put(arr[i], map.getOrDefault(arr[i], 0)+1);
+        }
+        for (Map.Entry<Integer,Integer> entry : map.entrySet()) {
+            element=entry.getKey();
+            count=entry.getValue();
+            if (count>max_count) {
+                max_count=count; 
+                max_element=element;
+            }
+        }
+        System.err.println("Max element is : " + max_element + "\nMax count is : " + max_count);
+
+    }
+}
 class Array_concept {
     public void largest(int[] arr) {
         int largest=arr[0];
@@ -480,9 +517,12 @@ class Array_concept {
 public class DSA
 {   
         public static void main(String[] args) {
-        Array_concept ap=new Array_concept();
-        int[] arr = {10, 5, 2, 7, 9};
-        int k = 15;
-        System.err.println(ap.longest_subarray_better(arr, k));
+        // Array_concept ap=new Array_concept();
+        Hashing_Basic hb=new Hashing_Basic();
+        int[] arr = {10,5,10,15,10,5};
+        int query=4;
+        hb.highest_occurence(arr);
+        // int k = 15;
+        // System.err.println(ap.longest_subarray_better(arr, k));
 	}
 }
