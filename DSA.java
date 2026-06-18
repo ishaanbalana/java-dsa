@@ -513,45 +513,25 @@ class Array_concept {
         return maxLen;
     }
     //sliding window approach
-    public void longest_subarray_optimal(int[] arr, int k) {
-        int left=0;
-        int right=0;
-        int size=0;
-        int sum=0;
-        int temp=0;
-        for (int i=0; i<arr.length; i++) {
-            sum+=arr[i];
-            size++;
+    public int longest_subarray_optimal(int[] nums, int k) {
+        int n=nums.length;
+        int left=0, right=0; 
+        int max_len=0; 
+        int sum=nums[0];
+        while (right<n) {
+            while (left<=right && sum>k) {
+                sum-=nums[left];
+                left++;
+            }
             if (sum==k) {
-                i=left;
-                if (size>right) {
-                    right=size;
-                    temp=left;
-                }
-                left++;
-                size=0;
-                sum=0;
+                max_len=Math.max(max_len, right-left+1);
             }
-            if (i==arr.length-1 && left==arr.length-1) {
-                break;
-            }
-            if (i==arr.length-1) {
-                left++;
-                i=left;
-                size=0;
-                sum=0;
+            right++;
+            if (right<n) {
+                sum+=nums[right];
             }
         }
-        System.err.println("The longest subarray size is : "+right);
-        if (right==0) {
-            System.err.println("There is no sub-array in the array that sums to 6. Therefore, the output is 0.");
-        }
-        else{
-            for (int i=temp; i<=right; i++) {
-                System.err.println(arr[i]);
-            }
-        }
-        
+        return max_len;
     }
     //brute force approach
     public void two_sum(int[] arr, int target) {
@@ -572,42 +552,33 @@ class Array_concept {
             System.err.println("for second variant output will be : ["+left+","+right+"]");
         }
     }
-    //optimal approach
-    public void two_sum_optimal(int[] arr, int target) {
-        int left=0, right=1; 
-        int sum=0; 
-        boolean found=false;
-        for (int i=0; i<arr.length-1; i++) {
-            sum=arr[left]+arr[right];
-            if (sum==target) {
-                found=true;
-                break;
-            }
-            right++;
-            if (right==arr.length-2 && left!=arr.length-2) {
-                left++;
-                i=left;
-            }
-            if (i==arr.length-1) {
-                break;
-            }
+    //better approach
+    public void two_sum_better(int[] arr, int target) {
+    Map<Integer, Integer> map = new HashMap<>();
+
+    for (int i = 0; i < arr.length; i++) {
+        int complement = target - arr[i];
+
+        if (map.containsKey(complement)) {
+            System.out.println("YES");
+            System.out.println("{" + map.get(complement) + "," + i + "}");
+            return;
         }
-        if (found==true) {
-            System.err.println("YES for first variant");
-            System.err.println("for second variant output will be : ["+left+","+right+"]");
-        }
-        else {
-            System.err.println("No");
-        }
+
+        map.put(arr[i], i);
     }
+
+    System.out.println("NO");
+}
+
 
 }
 public class DSA
 {   
         public static void main(String[] args) {
         Array_concept ap=new Array_concept();
-        int[] arr = {2,6,5,8,11};
-        int k=14;
-        ap.two_sum(arr, k);
+        int[] arr = {10, 5, 2, 7, 1, 5 , 9};
+        int k=15;
+        ap.two_sum_better(arr, k);
 	}
 }
