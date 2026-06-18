@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Scanner;
 import java.util.Map;
+import java.util.Arrays;
 class Hashing_Basic{
     //optimal
     public void occurrence(int[] arr, int queries) {
@@ -45,7 +46,7 @@ class Hashing_Basic{
 
     }
 }
-class Array_concept {
+class Array_concept_easy {
     public void largest(int[] arr) {
         int largest=arr[0];
         for (int i=1; i<arr.length; i++) {
@@ -223,7 +224,7 @@ class Array_concept {
     public void union_hashmap(int[] arr1, int[] arr2){
         HashMap<Integer, Integer> map=new HashMap<>();
         for (int i=0; i<arr1.length; i++) {
-            map.put(arr1[i], map.getOrDefault(arr1, 0)+1);
+            map.put(arr1[i], map.getOrDefault(arr1[i], 0)+1);
         }
         for (int i=0; i<arr2.length; i++) {
             map.put(arr2[i], map.getOrDefault(arr2[i], 0)+1);
@@ -410,6 +411,117 @@ class Array_concept {
             System.err.println("Both consecutive are same:"+max);
         }
     }
+    //brute force approach
+    public void two_sum(int[] arr, int target) {
+        int left=0, right=0; 
+        boolean found=false;
+        for (int i=0; i<arr.length; i++) {
+            for (int j=i+1; j<arr.length-1; j++) {
+                if (arr[i]+arr[j]==target) {
+                    left=i; 
+                    right=j;
+                    found=true;
+                    break;
+                }
+            }
+        }
+        if (found==true) {
+            System.err.println("The answer is “YES” for first variant");
+            System.err.println("for second variant output will be : ["+left+","+right+"]");
+        }
+    }
+    //better approach
+    public void two_sum_better(int[] arr, int target) {
+    Map<Integer, Integer> map = new HashMap<>();
+
+    for (int i = 0; i < arr.length; i++) {
+        int complement = target - arr[i];
+
+        if (map.containsKey(complement)) {
+            System.out.println("YES");
+            System.out.println("{" + map.get(complement) + "," + i + "}");
+            return;
+        }
+
+        map.put(arr[i], i);
+    }
+
+    System.out.println("NO");
+}
+    //optimal approach
+    public void two_sum_optimal(int[] arr, int target) {
+        int n=arr.length;
+        int left=0,right=n-1;
+        int[][] num=new int[n][2];
+        for (int i=0; i<n; i++) {
+            num[i][0]=arr[i];
+            num[i][1]=i;
+        }
+        Arrays.sort(num, (a,b) -> Integer.compare(a[0],b[0]));
+        while (left<right) {
+            int sum=num[left][0]+num[right][0];
+            if (sum==target) {
+                System.err.println("yes");
+                System.err.println("hashing approach is better for the indices");
+                return;
+            }
+            else if (sum<target) {
+                left++;
+            }
+            else {
+                right--;
+            }
+        }
+        System.err.println("NO");
+        System.err.println("hashing approach is better for the indices");
+        return;
+    }
+    //better approach
+    public void majority_element(int[] arr) {
+        int hl=arr.length/2;
+        Map<Integer,Integer> map = new HashMap<>();
+        for (int i=0; i<arr.length; i++) {
+            map.put(arr[i], map.getOrDefault(arr[i],0)+1);
+        }
+        for (Map.Entry<Integer, Integer> entry:map.entrySet()){
+            if (entry.getValue()>hl) {
+                System.err.println(entry.getKey());
+                break;
+            }
+        }
+    }
+    //optimal approach
+    public void majority_element_optimal(int[] arr) {
+        int n=arr.length;
+        int cnt=0; 
+        int ele=0;
+        for (int i=0; i<n; i++) {
+            if (cnt==0) {
+                cnt=1;
+                ele=arr[i];
+            }
+            else if (ele==arr[i]) {
+                cnt++;
+            }
+            else {
+                cnt--;
+            }
+        }
+        int cnt1=0;
+        for (int i=0; i<n; i++) {
+            if (arr[i]==ele) {
+                cnt1++;
+            }
+        }
+        if (cnt1>n/2) {
+            System.err.println(ele);
+            return;
+        }
+        System.err.println(-1);
+    }
+
+}
+class Array_concept_medium {
     //better
     public int freq_check(int[] arr) {
         int n = arr.length;
@@ -533,52 +645,73 @@ class Array_concept {
         }
         return max_len;
     }
-    //brute force approach
-    public void two_sum(int[] arr, int target) {
-        int left=0, right=0; 
-        boolean found=false;
-        for (int i=0; i<arr.length; i++) {
-            for (int j=i+1; j<arr.length-1; j++) {
-                if (arr[i]+arr[j]==target) {
-                    left=i; 
-                    right=j;
-                    found=true;
-                    break;
-                }
+    //optimal approach    
+    public void sortZeroOneTwo(int[] arr) {
+        int low=0, mid=0, high=arr.length-1;
+        while (mid<=high) {
+            if (arr[mid]==0) {
+                int temp=arr[mid];
+                arr[mid]=arr[low];
+                arr[low]=temp;
+                low++;
+                mid++;
+            }
+            else if (arr[mid]==1) {
+                mid++;
+            }
+            else {
+                int temp=arr[high];
+                arr[high]=arr[mid];
+                arr[mid]=temp;
+                high--;
             }
         }
-        if (found==true) {
-            System.err.println("The answer is “YES” for first variant");
-            System.err.println("for second variant output will be : ["+left+","+right+"]");
+        for (int i=0; i<arr.length; i++) {
+            System.err.println(arr[i]);
         }
     }
-    //better approach
-    public void two_sum_better(int[] arr, int target) {
-    Map<Integer, Integer> map = new HashMap<>();
-
-    for (int i = 0; i < arr.length; i++) {
-        int complement = target - arr[i];
-
-        if (map.containsKey(complement)) {
-            System.out.println("YES");
-            System.out.println("{" + map.get(complement) + "," + i + "}");
-            return;
+    //brute approach
+    public void kandence_algorithm(int[] arr, int k) {
+        int left=0, right=0;
+        int cnt=0, max_cnt=0;
+        int sum=0;
+        int temp=0;
+        while (left<=right) {
+            sum+=arr[right];
+            cnt++;
+            if (sum==k) {
+                sum-=arr[left];
+                if (cnt>max_cnt) {
+                    max_cnt=cnt;
+                    temp=left;
+                }
+                left++;
+                cnt--;
+            }
+            else if (sum>k) {
+                sum-=arr[left];
+                left++;
+                cnt--;
+            }
+            right++;
+            if (right==arr.length-1) {
+                break;
+            }
         }
-
-        map.put(arr[i], i);
+        for (int i=temp; i<max_cnt; i++) {
+            System.err.println(arr[i]);
+        }
     }
 
-    System.out.println("NO");
 }
 
 
-}
 public class DSA
 {   
         public static void main(String[] args) {
-        Array_concept ap=new Array_concept();
-        int[] arr = {10, 5, 2, 7, 1, 5 , 9};
+        Array_concept_medium ap=new Array_concept_medium();
+        int[] arr = {2, 3, 5, -2, 7, -4};
         int k=15;
-        ap.two_sum_better(arr, k);
+        ap.kandence_algorithm(arr, k);
 	}
 }
