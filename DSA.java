@@ -671,36 +671,46 @@ class Array_concept_medium {
         }
     }
     //brute approach
-    public void kandence_algorithm(int[] arr, int k) {
-        int left=0, right=0;
-        int cnt=0, max_cnt=0;
-        int sum=0;
-        int temp=0;
-        while (left<=right) {
-            sum+=arr[right];
-            cnt++;
-            if (sum==k) {
-                sum-=arr[left];
-                if (cnt>max_cnt) {
-                    max_cnt=cnt;
-                    temp=left;
+    public void kandence_algorithm(int[] arr) {
+        int maxi=Integer.MIN_VALUE;
+        for (int i=0; i<arr.length; i++) {
+            for (int j=i; j<arr.length; j++) {
+                int sum=0;
+               for (int k=i; k<j; k++) {
+                    sum+=arr[k];
                 }
-                left++;
-                cnt--;
+                maxi=Math.max(maxi, sum);
             }
-            else if (sum>k) {
-                sum-=arr[left];
-                left++;
-                cnt--;
-            }
-            right++;
-            if (right==arr.length-1) {
-                break;
+            
+        }
+        System.err.println(maxi);
+    }
+    //better approach
+    public void kandence_algorithm_better(int[] arr) {
+        int maxi=Integer.MIN_VALUE;
+        for (int i=0; i<arr.length; i++) {
+            int sum=0;
+            for (int j=0; j<arr.length; j++) {
+                sum+=arr[j];
+                maxi=Math.max(maxi, sum);
             }
         }
-        for (int i=temp; i<max_cnt; i++) {
-            System.err.println(arr[i]);
+        System.err.println(maxi);
+    }
+
+    public int kandence_algorithm_optimal(int[] arr) {
+        long maxi=Long.MIN_VALUE;
+        long sum=0;
+        for (int i=0; i<arr.length; i++) {
+            sum+=arr[i];
+            if (sum>maxi) {
+                maxi=sum;
+            }
+            if (sum<0) {
+                sum=0;
+            }
         }
+        return (int) maxi;
     }
 
 }
@@ -711,7 +721,6 @@ public class DSA
         public static void main(String[] args) {
         Array_concept_medium ap=new Array_concept_medium();
         int[] arr = {2, 3, 5, -2, 7, -4};
-        int k=15;
-        ap.kandence_algorithm(arr, k);
+        ap.kandence_algorithm_better(arr);
 	}
 }
