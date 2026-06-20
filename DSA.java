@@ -742,6 +742,34 @@ class Array_concept_medium {
         return profit;
     }
 
+    public void ArrayManipulator(int[] arr) {
+        int[] pos=new int[arr.length];
+        int[] neg=new int[arr.length];
+        int j=0, k=0; 
+        for (int i=0; i<arr.length; i++) {
+            if (arr[i]>0) {
+                pos[j]=arr[i];
+                j++;
+            }
+            else {
+                neg[k]=arr[i];
+                k++;
+            }
+        }
+        j=0;
+        k=0;
+        for (int i=0; i<arr.length; i++) {
+            if (i%2==0) {
+                System.err.println(pos[j]);
+                j++;
+            }
+            else {
+                System.err.println(neg[k]);
+                k++;
+            }
+        }
+    }
+
 }
 
 
@@ -749,7 +777,7 @@ public class DSA
 {   
         public static void main(String[] args) {
         Array_concept_medium ap=new Array_concept_medium();
-        int[] arr = {7,6,4,3,1};
-        System.err.println(ap.Stock_buy_Sell_optimal(arr));
+        int[] arr = {1,2,-4,-5};
+        ap.ArrayManipulator(arr);
 	}
 }
