@@ -697,7 +697,7 @@ class Array_concept_medium {
         }
         System.err.println(maxi);
     }
-
+    //optimal approach
     public int kandence_algorithm_optimal(int[] arr) {
         long maxi=Long.MIN_VALUE;
         long sum=0;
@@ -712,6 +712,35 @@ class Array_concept_medium {
         }
         return (int) maxi;
     }
+    //brute approach
+    public int Stock_buy_Sell(int[] arr) {
+        int mxprofit=0;
+        int buy=0, sell=0;
+        for (int i=0; i<arr.length; i++) {
+            int profit=0;
+            for (int j=i+1; j<arr.length; j++) {
+                profit=arr[j]-arr[i];
+                if (profit > mxprofit && profit>0) {
+                    mxprofit=profit;
+                }
+            }
+        }
+        return mxprofit;
+    }
+    //optimal approach
+    public int Stock_buy_Sell_optimal(int[] arr) {
+        int min_price=Integer.MAX_VALUE;
+        int profit=0; 
+        for (int array:arr) {
+            if (array<min_price) {
+                min_price=array;
+            }
+            else {
+                profit=Math.max(profit, array-min_price);
+            }
+        }
+        return profit;
+    }
 
 }
 
@@ -720,7 +749,7 @@ public class DSA
 {   
         public static void main(String[] args) {
         Array_concept_medium ap=new Array_concept_medium();
-        int[] arr = {2, 3, 5, -2, 7, -4};
-        ap.kandence_algorithm_better(arr);
+        int[] arr = {7,6,4,3,1};
+        System.err.println(ap.Stock_buy_Sell_optimal(arr));
 	}
 }
