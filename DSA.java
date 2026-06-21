@@ -741,7 +741,7 @@ class Array_concept_medium {
         }
         return profit;
     }
-
+    //brute approach
     public void ArrayManipulator(int[] arr) {
         int[] pos=new int[arr.length];
         int[] neg=new int[arr.length];
@@ -769,6 +769,24 @@ class Array_concept_medium {
             }
         }
     }
+    //optimal approach
+    public void Array_Manipulator_Optimal(int[] arr) {
+        int j=0, k=1;
+        int[] array=new int[arr.length];
+        for (int i=0; i<arr.length; i++) {
+            if (arr[i]>=0) {
+                array[j]=arr[i];
+                j+=2;
+            }
+            else {
+                array[k]=arr[i];
+                k+=2;
+            }
+        }
+        for (int i=0; i<arr.length; i++) {
+            System.err.println(array[i]);
+        }
+    }
 
 }
 
@@ -778,6 +796,6 @@ public class DSA
         public static void main(String[] args) {
         Array_concept_medium ap=new Array_concept_medium();
         int[] arr = {1,2,-4,-5};
-        ap.ArrayManipulator(arr);
+        ap.Array_Manipulator_Optimal(arr);
 	}
 }
